@@ -1,19 +1,20 @@
- <template>
+<template>
   <div id="app">
-      <router-view/>
+    <router-view/>
   </div>
 </template>
- <style>
-  *{
-    padding:0;
-    margin:0;
-    box-sizing:border-box;
-  }
-  body{
-    line-height:1.5;
-  }
-  a{
-    text-decoration:none;
-    color:inherit;
-  }
- </style>
+<style lang="scss">
+@import '~@/assets/style/reset.scss';
+@import '~@/assets/style/helper.scss';
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  font-family: $font-hei;
+  line-height: 1.5;
+  color: #333;
+}
+</style>
