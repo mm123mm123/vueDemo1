@@ -1,28 +1,34 @@
 <template>
   <Layout class-prefix="layout">
-    <NumberPad @update:value="record.NumberPadOutput=$event" @update:dataBase="updateDatabase"/>
+    <NumberPad @update:value="record.NumberPadOutput=$event"
+               @update:dataBase="updateDatabase"/>
     <Types :type.sync="record.type"/>
-    <Notes @update:note="record.noteValue=$event"/>
-    <Tags :data-source.sync="tags" :selected-tags.sync="record.selectedTags"/>
+    <InputItem name='备注'
+               placeholder="请输入备注"
+               class-prefix="money"
+               @update:note="record.noteValue=$event"/>
+    <Tags :data-source.sync="tags"
+          :selected-tags.sync="record.selectedTags"/>
   </Layout>
 </template>
 
 <script lang="ts">
 
 import Tags from '@/components/money/Tags.vue';
-import Notes from '@/components/money/Notes.vue';
+import InputItem from '@/components/InputItem.vue';
 import Types from '@/components/money/Types.vue';
 import NumberPad from '@/components/money/NumberPad.vue';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import model from '@/model.ts';
+import recordListModel from '@/model/recordListModel';
+import labelListModel from '@/model/labelListModel';
 
 
 @Component({
-  components: {NumberPad, Types, Notes, Tags}
+  components: {InputItem, NumberPad, Types, Tags}
 })
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行', '理财'];
+  tags = labelListModel.getData().map(element => element.name);
   record: RecordItem = {
     NumberPadOutput: '0',
     type: '-',
@@ -30,20 +36,24 @@ export default class Money extends Vue {
     selectedTags: [],
     createAt: new Date()
   };
-  recordList: Array<RecordItem> = model.getData();
+  recordList: Array<RecordItem> = recordListModel.getData();
 
   updateDatabase() {
     this.record.createAt = new Date();
-    const parsedRecord = model.cloneData(this.record);
+    const parsedRecord = recordListModel.cloneData(this.record);
     this.recordList.push(parsedRecord);
-    model.saveData(this.recordList)
+    recordListModel.saveData(this.recordList);
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 .layout-content {
   display: flex;
   flex-direction: column-reverse;
+}
+
+.money-input {
+  height: 64px;
 }
 </style>

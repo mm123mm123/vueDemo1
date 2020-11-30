@@ -1,7 +1,7 @@
 <template>
   <div class="layout-wrapper">
     <div class="content" :class="classPrefix&&`${classPrefix}-content`">
-      <slot></slot>
+      <slot/>
     </div>
     <Nav/>
   </div>

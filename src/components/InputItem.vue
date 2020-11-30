@@ -1,19 +1,25 @@
 <template>
   <label class="notes">
         <span class="name">
-          备注
+          {{name}}
         </span>
-    <input type="text" placeholder="请在此输入备注" v-model="note"/>
+    <input :class="classPrefix&&`${classPrefix}-input`"
+           type="text"
+           :placeholder="placeholder"
+           v-model="note"/>
   </label>
 
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
-export default class Notes extends Vue {
+export default class InputItem extends Vue {
+  @Prop() name!: string
+  @Prop() placeholder!: string
+  @Prop() classPrefix!: string
   note = '';
   @Watch('note')
   onValueChanged(note: string){
@@ -35,7 +41,6 @@ export default class Notes extends Vue {
   > input {
     background: transparent;
     border: none;
-    height: 64px;
     flex-grow: 1;
   }
 }

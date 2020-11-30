@@ -1,14 +1,15 @@
 import Vue from 'vue';
 import VueRouter, {RouteConfig} from 'vue-router';
-import Money from '@/views/Money.vue'
-import Labels from '@/views/Labels.vue'
-import Statistics from '@/views/Statistics.vue'
-import NotFound from '@/views/NotFound.vue'
+import Money from '@/views/Money.vue';
+import Labels from '@/views/Labels.vue';
+import Statistics from '@/views/Statistics.vue';
+import NotFound from '@/views/NotFound.vue';
+import EditLabel from '@/views/EditLabel.vue';
+
 Vue.use(VueRouter);
 
 
-
-const routes=[
+const routes = [
   {
     path: '/',
     redirect: '/money',
@@ -26,7 +27,11 @@ const routes=[
     component: Statistics
   },
   {
-    path:'/*',
+    path: '/labels/edit/:id',
+    component: EditLabel
+  },
+  {
+    path: '/*',
     component: NotFound
   }
 ];

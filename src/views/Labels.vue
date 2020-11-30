@@ -1,39 +1,37 @@
 <template>
   <Layout>
-    <ol class="tagList">
-      <li>
-        <span>衣</span>
-        <Icon icon-name="rightArrow"></Icon>
-      </li>
-      <li>
-        <span class="tag">食</span>
-        <Icon icon-name="rightArrow"></Icon>
-      </li>
-      <li>
-        <span class="tag">住</span>
-        <Icon icon-name="rightArrow"></Icon>
-      </li>
-      <li>
-        <span class="tag">行</span>
-        <Icon icon-name="rightArrow"></Icon>
-      </li>
-    </ol>
+    <div class="tagList">
+      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.name">
+        <span>{{ tag.name }}</span>
+        <Icon icon-name="leftArrow"/>
+      </router-link>
+    </div>
     <div class="createTag">
-      <button>新建标签</button>
+      <Button @click="createTag">新建标签</Button>
     </div>
   </Layout>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+import labelListModel from '@/model/labelListModel';
+import Button from '@/components/Button.vue';
+@Component({
+  components: {Button}
+})
+export default class Labels extends Vue {
+  tags = labelListModel.getData();
 
-export default {
-  name: 'Labels.vue'
+  createTag() {
+    labelListModel.create();
+  }
 }
 </script>
 <style scoped lang="scss">
 
 .tagList {
-  > li {
+  > .tag {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
@@ -41,16 +39,20 @@ export default {
     border-bottom: 1px solid #bcbbc1;
     padding: 8px 0 12px 0px;
     margin-left: 15px;
-    > svg{
-      height:18px;
-      width:18px;
+
+    > svg {
+      height: 18px;
+      width: 18px;
       margin-right: 12px;
     }
   }
 }
-.createTag{
+
+.createTag {
   display: flex;
   justify-content: center;
   padding: 44px 0 0 0;
+
+
 }
 </style>
