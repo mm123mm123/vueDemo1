@@ -1,12 +1,19 @@
+import clone from '@/lib/clone';
 const recordListModel = {
-  cloneData(record: RecordItem | Array<RecordItem>) {
-    return JSON.parse(JSON.stringify(record)) ;
-  },
+  data: [] as recordItem[],
+
   getData() {
-    return JSON.parse(localStorage.getItem('recordList')|| '[]') as Array<RecordItem>;
+    this.data = JSON.parse(localStorage.getItem('recordList') || '[]') as Array<recordItem>;
+    return this.data;
   },
-  saveData(recordList: Array<RecordItem>) {
-    localStorage.setItem('recordList', JSON.stringify(recordList));
+  createData(record: recordItem) {
+    record.createAt = new Date();
+    const parsedRecord = clone(record);
+    this.data.push(parsedRecord);
+    this.saveData();
+  },
+  saveData() {
+    localStorage.setItem('recordList', JSON.stringify(this.data));
   }
 };
 export default recordListModel;

@@ -22,7 +22,7 @@ import Button from '@/components/Button.vue';
   components: {Button}
 })
 export default class Labels extends Vue {
-  tags = labelListModel.getData();
+  tags = window.labelList;
 
   createTag() {
     labelListModel.create();

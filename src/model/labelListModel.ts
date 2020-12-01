@@ -22,7 +22,6 @@ const labelListModel: labelListModel = {
       if (this.data.map(element => element.name).indexOf(name!) >= 0) {
         window.alert('标签名不能重复');
       } else {
-
         this.data.push({id: createId().toString(), name: name});
         this.saveData();
       }

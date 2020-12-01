@@ -1,4 +1,4 @@
-type RecordItem = {
+type recordItem = {
   NumberPadOutput: string;
   type: string;
   noteValue: string;
@@ -10,3 +10,6 @@ type label =
     id: string;
     name: string;
   }
+interface Window {
+  labelList: label[];
+}
