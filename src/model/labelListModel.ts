@@ -1,3 +1,5 @@
+import createId from '@/lib/createId';
+
 type labelListModel =
   {
     data: label[];
@@ -20,7 +22,8 @@ const labelListModel: labelListModel = {
       if (this.data.map(element => element.name).indexOf(name!) >= 0) {
         window.alert('标签名不能重复');
       } else {
-        this.data.push({id: name, name: name});
+
+        this.data.push({id: createId().toString(), name: name});
         this.saveData();
       }
     } else if (name === '') {
@@ -34,7 +37,7 @@ const labelListModel: labelListModel = {
     } else if (this.data.filter(item => item.name === inputData)[0]) {
       return 'duplicate';
     } else {
-      label.id = label.name = inputData;
+      label.name = inputData;
       this.saveData();
       return 'success';
     }
