@@ -3,11 +3,11 @@
     <div class="tagList">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.name">
         <span>{{ tag.name }}</span>
-        <Icon icon-name="leftArrow"/>
+        <Icon icon-name="rightArrow"/>
       </router-link>
     </div>
     <div class="createTag">
-      <Button @click="createTag">新建标签</Button>
+      <Button @buttonClick="createTag">新建标签</Button>
     </div>
   </Layout>
 </template>

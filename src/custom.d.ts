@@ -5,3 +5,8 @@ type RecordItem = {
   selectedTags: string[];
   createAt: Date;
 }
+type label =
+  {
+    id: string;
+    name: string;
+  }

@@ -6,7 +6,9 @@
     <input :class="classPrefix&&`${classPrefix}-input`"
            type="text"
            :placeholder="placeholder"
-           v-model="note"/>
+           :value="labelName"
+           @input="onValueChanged($event.target.value)"
+           />
   </label>
 
 </template>
@@ -20,10 +22,9 @@ export default class InputItem extends Vue {
   @Prop() name!: string
   @Prop() placeholder!: string
   @Prop() classPrefix!: string
-  note = '';
-  @Watch('note')
-  onValueChanged(note: string){
-    this.$emit('update:note',note)
+  @Prop({default:''})labelName!: string;
+  onValueChanged(inputData: string){
+    this.$emit('update:data',inputData)
   }
 }
 </script>

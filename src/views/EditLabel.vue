@@ -1,17 +1,20 @@
 <template>
   <layout>
     <nav>
-      <Icon class="arrow" icon-name="leftArrow"/>
+      <Icon class="arrow" icon-name="leftArrow"
+            @iconClick="back"
+      />
       <span class="text">编辑标签</span>
       <div/>
     </nav>
-      <InputItem name="标签名"
-                 placeholder="请输入标签名"
-                 class-prefix="editLabel"
-                 class="input"
-      />
+    <InputItem name="标签名"
+               class-prefix="editLabel"
+               class="input"
+               :labelName="label.name"
+               @update:data="editData"
+    />
     <div class="buttonWrapper">
-      <Button >删除标签</Button>
+      <Button @buttonClick='remove'>删除标签</Button>
     </div>
   </layout>
 </template>
@@ -27,14 +30,28 @@ import Button from '@/components/Button.vue';
   components: {InputItem, Button}
 })
 export default class EditLabel extends Vue {
+  label!: label;
+
   created() {
     const routeId = this.$route.params.id;
     const label = labelListModel.getData().filter(element => element.id === routeId)[0];
     if (label) {
-      console.log(label);
+      this.label = label;
     } else {
       this.$router.replace('/404');
     }
+  }
+
+  editData(inputData: string) {
+    labelListModel.edit(this.label.id, inputData);
+  }
+
+  remove() {
+    labelListModel.remove(this.label);
+    this.$router.back();
+  }
+  back(){
+    this.$router.back();
   }
 }
 </script>
@@ -63,11 +80,13 @@ nav {
   }
 
 }
-.input{
-  font-size:16px;
+
+.input {
+  font-size: 16px;
   margin-top: 6px;
 }
-.buttonWrapper{
+
+.buttonWrapper {
   display: flex;
   justify-content: center;
   margin-top: 30px;
