@@ -14,18 +14,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import labelListModel from '@/model/labelListModel';
 import Button from '@/components/Button.vue';
-@Component({
-  components: {Button}
-})
-export default class Labels extends Vue {
-  tags = window.labelList;
+import {mixins} from 'vue-class-component';
+import labelHelper from '@/mixins/labelHelper';
 
-  createTag() {
-    labelListModel.create();
+@Component({
+  components: {Button},
+  computed: {
+    tags() {
+      return this.$store.state.labelList;
+    }
+  }
+})
+export default class Labels extends mixins(labelHelper) {
+  beforeCreate(){
+    this.$store.commit('getLabelList')
   }
 }
 </script>

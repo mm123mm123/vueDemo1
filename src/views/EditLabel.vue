@@ -23,34 +23,40 @@
 import Vue from 'vue';
 import InputItem from '@/components/InputItem.vue';
 import {Component} from 'vue-property-decorator';
-import labelListModel from '@/model/labelListModel';
 import Button from '@/components/Button.vue';
 
 @Component({
   components: {InputItem, Button}
 })
 export default class EditLabel extends Vue {
-  label!: label;
+  get label() {
+    return this.$store.state.targetLabel;
+  }
+  get removeState(){
+    return this.$store.state.removeState;
+  }
 
   created() {
-    const routeId = this.$route.params.id;
-    const label = labelListModel.getData().filter(element => element.id === routeId)[0];
-    if (label) {
-      this.label = label;
-    } else {
+    this.$store.commit('getLabelList')
+    this.$store.commit('findLabel', this.$route.params.id);
+    if (!this.label) {
       this.$router.replace('/404');
     }
   }
 
   editData(inputData: string) {
-    labelListModel.edit(this.label.id, inputData);
+    this.$store.commit('editLabel',
+        {id:this.label.id, inputData:inputData});
   }
 
   remove() {
-    labelListModel.remove(this.label);
-    this.$router.back();
+    this.$store.commit('removeLabel',this.label)
+    if (this.removeState) {
+      this.$router.back();
+    }
   }
-  back(){
+
+  back() {
     this.$router.back();
   }
 }

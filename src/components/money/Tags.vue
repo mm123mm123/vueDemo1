@@ -4,23 +4,35 @@
       <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag"
+      <li v-for="tag in labels.map(element => element.name)" :key="tag"
           @click="select(tag)"
-          :class="selectedTags.indexOf(tag)>=0&&'selected'">{{ tag }}
+          :class="selectedTags.indexOf(tag)>=0&&'selected'">
+        {{ tag }}
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import labelListModel from '@/model/labelListModel';
+import {mixins} from 'vue-class-component';
+import labelHelper from '@/mixins/labelHelper';
 
-@Component
-export default class Tags extends Vue {
+@Component({
+  computed: {
+    labels() {
+      return this.$store.state.labelList;
+    }
+  }
+})
+export default class Tags extends mixins(labelHelper) {
   @Prop(Array) dataSource: string[] | undefined;
   @Prop(Array) selectedTags!: string[];
+
+  beforeCreate() {
+    this.$store.commit('getLabelList');
+    console.log(this.$store.state.labelList);
+  }
 
   select(tag: string) {
     const index = this.selectedTags.indexOf(tag);
@@ -31,11 +43,6 @@ export default class Tags extends Vue {
       this.selectedTags.push(tag);
       this.$emit('update:selectedTags', [...this.selectedTags]);
     }
-  }
-
-  createTag() {
-    labelListModel.create();
-    this.$emit('update:dataSource',  labelListModel.getData().map(element => element.name))
   }
 }
 
@@ -63,6 +70,7 @@ export default class Tags extends Vue {
       justify-content: center;
       align-items: center;
       margin-top: 6px;
+
       &.selected {
         background: darken(#d9d9d9, 50%);
         color: white;
