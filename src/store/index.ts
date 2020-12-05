@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createId from '@/lib/createId';
+import clone from '@/lib/clone';
 
 Vue.use(Vuex);
 type rootState = {
@@ -15,20 +16,19 @@ const store = new Vuex.Store({
     labelList: [] as label[],
     targetLabel: undefined,
     removeState: undefined,
+
   } as rootState,
   mutations: {
     getLabelList(state) {
       state.labelList = JSON.parse(localStorage.getItem('labelList') || '[]') as label[];
     },
     createLabel(state) {
-      console.log(this.labelList);
       const name = window.prompt('请输入标签名字');
       if (name) {
         if (state.labelList.map(element => element.name).indexOf(name!) >= 0) {
           window.alert('标签名不能重复');
         } else {
           state.labelList.push({id: createId().toString(), name: name});
-          console.log(state.labelList);
           store.commit('saveLabelList');
         }
       } else if (name === '') {
@@ -62,8 +62,21 @@ const store = new Vuex.Store({
     },
     saveLabelList(state) {
       localStorage.setItem('labelList', JSON.stringify(state.labelList));
+    },
+
+    getRecordList(state) {
+      state.recordList = JSON.parse(localStorage.getItem('recordList') || '[]') as Array<recordItem>;
+    },
+    createRecord(state,record: recordItem) {
+      record.createAt = new Date();
+      const parsedRecord = clone(record);
+      state.recordList.push(parsedRecord);
+      store.commit('saveRecordList')
+    },
+    saveRecordList(state) {
+      localStorage.setItem('recordList', JSON.stringify(state.recordList));
     }
-  },
+  }
 });
 
 export default store;

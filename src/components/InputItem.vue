@@ -3,8 +3,7 @@
         <span class="name">
           {{name}}
         </span>
-    <input :class="classPrefix&&`${classPrefix}-input`"
-           type="text"
+    <input type="text"
            :placeholder="placeholder"
            :value="labelName"
            @input="onValueChanged($event.target.value)"
@@ -21,7 +20,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export default class InputItem extends Vue {
   @Prop() name!: string
   @Prop() placeholder!: string
-  @Prop() classPrefix!: string
   @Prop({default:''})labelName!: string;
   onValueChanged(inputData: string){
     this.$emit('update:data',inputData)

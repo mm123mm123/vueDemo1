@@ -1,7 +1,9 @@
 <template>
   <ul class="types">
-    <li :class="type==='-'&&'selected'" @click="selectType('-')">支出</li>
-    <li :class="type==='+'&&'selected'" @click="selectType('+')">收入</li>
+    <li :class="type===data.type&&'selected'" @click="selectType(data.type)"
+        v-for="data in dataSource" :key="data.name">
+      {{data.name}}
+    </li>
   </ul>
 </template>
 
@@ -10,20 +12,21 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
 @Component
-export default class Types extends Vue {
+export default class Tab extends Vue {
+  @Prop({required: true}) dataSource!: Array<{ name: string; type: string }>;
   @Prop(String) type!: string;
 
   selectType(type: string) {
-    if(type!=='-'&&type!=='+'){
-      throw new Error('type is unknown')
+    if (this.dataSource.map(item=>item.type).indexOf(type)===-1) {
+      throw new Error('type is unknown');
     }
-    this.$emit('update:type',type)
+    this.$emit('update:type', type);
   }
-
 }
+
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .types {
   background: #c4c4c4;
   display: flex;
@@ -45,7 +48,7 @@ export default class Types extends Vue {
       height: 4px;
       background: #333333;
     }
+
   }
 }
-
 </style>

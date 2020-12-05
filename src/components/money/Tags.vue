@@ -31,7 +31,6 @@ export default class Tags extends mixins(labelHelper) {
 
   beforeCreate() {
     this.$store.commit('getLabelList');
-    console.log(this.$store.state.labelList);
   }
 
   select(tag: string) {

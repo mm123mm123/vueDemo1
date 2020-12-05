@@ -8,7 +8,6 @@
       <div/>
     </nav>
     <InputItem name="标签名"
-               class-prefix="editLabel"
                class="input"
                :labelName="label.name"
                @update:data="editData"
@@ -32,12 +31,13 @@ export default class EditLabel extends Vue {
   get label() {
     return this.$store.state.targetLabel;
   }
-  get removeState(){
+
+  get removeState() {
     return this.$store.state.removeState;
   }
 
   created() {
-    this.$store.commit('getLabelList')
+    this.$store.commit('getLabelList');
     this.$store.commit('findLabel', this.$route.params.id);
     if (!this.label) {
       this.$router.replace('/404');
@@ -46,11 +46,11 @@ export default class EditLabel extends Vue {
 
   editData(inputData: string) {
     this.$store.commit('editLabel',
-        {id:this.label.id, inputData:inputData});
+        {id: this.label.id, inputData: inputData});
   }
 
   remove() {
-    this.$store.commit('removeLabel',this.label)
+    this.$store.commit('removeLabel', this.label);
     if (this.removeState) {
       this.$router.back();
     }
@@ -90,17 +90,15 @@ nav {
 .input {
   font-size: 16px;
   margin-top: 6px;
+
+  ::v-deep input {
+    height: 44px;
+  }
 }
 
 .buttonWrapper {
   display: flex;
   justify-content: center;
   margin-top: 30px;
-}
-</style>
-
-<style>
-.editLabel-input {
-  height: 44px;
 }
 </style>

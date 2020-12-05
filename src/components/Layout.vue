@@ -1,6 +1,6 @@
 <template>
   <div class="layout-wrapper">
-    <div class="content" :class="classPrefix&&`${classPrefix}-content`">
+    <div class="layout-content" >
       <slot/>
     </div>
     <Nav/>
@@ -10,7 +10,6 @@
 <script>
 import Nav from '@/components/Nav.vue'
 export default {
-  props:['classPrefix'],
   components:{Nav},
   name: "Layout.vue"
 }
@@ -22,7 +21,7 @@ export default {
   display:flex;
   flex-direction: column;
 }
-.content{
+.layout-content{
   overflow:auto;
   flex-grow:1;
 }

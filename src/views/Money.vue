@@ -1,11 +1,11 @@
 <template>
-  <Layout class-prefix="layout">
+  <Layout >
     <NumberPad @update:value="record.NumberPadOutput=$event"
                @update:dataBase="updateDatabase"/>
-    <Types :type.sync="record.type"/>
+    <Tabs :type.sync="record.type" :data-source="tabsDatasource"/>
     <InputItem name='备注'
+               class="inputItem"
                placeholder="请输入备注"
-               class-prefix="money"
                @update:data="record.noteValue=$event"/>
     <Tags :selected-tags.sync="record.selectedTags"/>
   </Layout>
@@ -19,11 +19,11 @@ import Types from '@/components/money/Types.vue';
 import NumberPad from '@/components/money/NumberPad.vue';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import store from '@/store/index2'
+import Tabs from '@/components/Tabs.vue';
 
 
 @Component({
-  components: {InputItem, NumberPad, Types, Tags}
+  components: {Tabs, InputItem, NumberPad, Types, Tags}
 })
 export default class Money extends Vue {
   record: recordItem = {
@@ -33,20 +33,25 @@ export default class Money extends Vue {
     selectedTags: [],
     createAt: new Date()
   };
+  tabsDatasource = [
+    {name: '支出', type: '-'},
+    {name: '收入', type: '+'}
+  ];
 
   updateDatabase() {
-    store.createRecord(this.record);
+    this.$store.commit('getRecordList')
+    this.$store.commit('createRecord',this.record);
   }
 }
 </script>
 
-<style lang="scss" >
-.layout-content {
+
+<style lang="scss" scoped>
+.inputItem ::v-deep input {
+  height: 64px;
+}
+::v-deep .layout-content{
   display: flex;
   flex-direction: column-reverse;
-}
-
-.money-input {
-  height: 64px;
 }
 </style>
