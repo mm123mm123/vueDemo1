@@ -28,13 +28,13 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
-
+import bigNumber from 'bignumber.js';
 
 
 type classifiedRecords = {
   time: string;
   recordArray: recordItem[];
-  total?: number;
+  total?: string;
 }
 
 @Component({
@@ -58,8 +58,8 @@ export default class Statistics extends Vue {
 
   computeTotal(records: classifiedRecords[]) {
     for (let i = 0; i < records.length; i++) {
-      const numberList = records[i].recordArray.map(record => parseFloat(record.NumberPadOutput));
-      records[i].total = numberList.reduce((num, item) => num + item);
+      const numberList = records[i].recordArray.map(record => new bigNumber(record.NumberPadOutput));
+      records[i].total = numberList.reduce((num, item) => num.plus(item)).toFixed();
     }
   }
 
