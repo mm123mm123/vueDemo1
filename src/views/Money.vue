@@ -31,7 +31,7 @@ export default class Money extends Vue {
     type: '-',
     noteValue: '',
     selectedTags: [],
-    createAt: new Date()
+    createAt: new Date().toISOString()
   };
   tabsDatasource = [
     {name: '支出', type: '-'},

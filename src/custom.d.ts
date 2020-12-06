@@ -3,7 +3,7 @@ type recordItem = {
   type: string;
   noteValue: string;
   selectedTags: string[];
-  createAt: Date;
+  createAt: string;
 }
 type label =
   {

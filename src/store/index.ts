@@ -68,7 +68,7 @@ const store = new Vuex.Store({
       state.recordList = JSON.parse(localStorage.getItem('recordList') || '[]') as Array<recordItem>;
     },
     createRecord(state,record: recordItem) {
-      record.createAt = new Date();
+      record.createAt = new Date().toISOString();
       const parsedRecord = clone(record);
       state.recordList.push(parsedRecord);
       store.commit('saveRecordList')
