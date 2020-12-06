@@ -27,7 +27,7 @@ import {Component} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
-  output = '0';
+  output='0'
 
   inputContent(event: MouseEvent) {
     const input = (event.target as HTMLButtonElement).textContent!;
@@ -52,11 +52,15 @@ export default class NumberPad extends Vue {
   clear() {
     this.output = '0';
   }
-  submitData(){
-    this.$emit('update:value',this.output)
-    this.$emit('update:dataBase')
-    this.output = '0';
+
+
+  submitData() {
+    this.$emit('update:value', this.output);
+    this.$emit('update:dataBase');
+    this.$emit('update:moneyPage')
+    this.output='0'
   }
+
 }
 </script>
 

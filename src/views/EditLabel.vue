@@ -9,7 +9,7 @@
     </nav>
     <InputItem name="标签名"
                class="input"
-               :labelName="label.name"
+               message="label.name"
                @update:data="editData"
     />
     <div class="buttonWrapper">

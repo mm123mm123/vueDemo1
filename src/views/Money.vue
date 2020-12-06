@@ -1,7 +1,9 @@
 <template>
-  <Layout >
+  <Layout>
     <NumberPad @update:value="record.NumberPadOutput=$event"
-               @update:dataBase="updateDatabase"/>
+               @update:dataBase="updateDatabase"
+               @update:moneyPage="updateMoneyPage"
+    />
     <Tabs :type.sync="record.type" :data-source="tabsDatasource"/>
     <InputItem name='备注'
                class="inputItem"
@@ -39,8 +41,12 @@ export default class Money extends Vue {
   ];
 
   updateDatabase() {
-    this.$store.commit('getRecordList')
-    this.$store.commit('createRecord',this.record);
+    this.$store.commit('getRecordList');
+    this.$store.commit('createRecord', this.record);
+  }
+
+  updateMoneyPage() {
+    location.reload();
   }
 }
 </script>
@@ -50,7 +56,8 @@ export default class Money extends Vue {
 .inputItem ::v-deep input {
   height: 64px;
 }
-::v-deep .layout-content{
+
+::v-deep .layout-content {
   display: flex;
   flex-direction: column-reverse;
 }

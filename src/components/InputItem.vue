@@ -5,7 +5,8 @@
         </span>
     <input type="text"
            :placeholder="placeholder"
-           :value="labelName"
+           :value="message"
+           @update:Page="updateMoneyPage"
            @input="onValueChanged($event.target.value)"
            />
   </label>
@@ -14,15 +15,19 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class InputItem extends Vue {
   @Prop() name!: string
   @Prop() placeholder!: string
-  @Prop({default:''})labelName!: string;
+  @Prop({default:''})message!: string;
   onValueChanged(inputData: string){
     this.$emit('update:data',inputData)
+  }
+  updateMoneyPage(){
+    console.log('hi');
+    this.$forceUpdate();
   }
 }
 </script>

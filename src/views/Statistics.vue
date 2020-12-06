@@ -65,6 +65,7 @@ export default class Statistics extends Vue {
 
   get result() {
     const recordList = clone(this.recordList.filter(record => record.type === this.moneyType)) as recordItem[];
+    if(recordList.length===0){return [] as recordItem[]}
     recordList.sort(
         (a, b) => dayjs(a.createAt).valueOf() - dayjs(b.createAt).valueOf()
     );
