@@ -9,8 +9,8 @@
     </nav>
     <InputItem name="标签名"
                class="input"
-               message="label.name"
-               @update:data="editData"
+               :message="label.name"
+               @update:message="editData"
     />
     <div class="buttonWrapper">
       <Button @buttonClick='remove'>删除标签</Button>

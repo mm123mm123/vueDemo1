@@ -8,7 +8,7 @@
     <InputItem name='备注'
                class="inputItem"
                placeholder="请输入备注"
-               @update:data="record.noteValue=$event"/>
+               :message.sync="record.noteValue"/>
     <Tags :selected-tags.sync="record.selectedTags"/>
   </Layout>
 </template>
@@ -42,11 +42,15 @@ export default class Money extends Vue {
 
   updateDatabase() {
     this.$store.commit('getRecordList');
+    if (this.record.selectedTags.length === 0) {
+      return window.alert('请至少选择一个标签');
+    }
     this.$store.commit('createRecord', this.record);
   }
 
   updateMoneyPage() {
-    location.reload();
+    this.record.noteValue = '';
+    this.record.selectedTags = [];
   }
 }
 </script>

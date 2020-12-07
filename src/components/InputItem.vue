@@ -6,7 +6,6 @@
     <input type="text"
            :placeholder="placeholder"
            :value="message"
-           @update:Page="updateMoneyPage"
            @input="onValueChanged($event.target.value)"
            />
   </label>
@@ -23,11 +22,7 @@ export default class InputItem extends Vue {
   @Prop() placeholder!: string
   @Prop({default:''})message!: string;
   onValueChanged(inputData: string){
-    this.$emit('update:data',inputData)
-  }
-  updateMoneyPage(){
-    console.log('hi');
-    this.$forceUpdate();
+    this.$emit('update:message',inputData)
   }
 }
 </script>
