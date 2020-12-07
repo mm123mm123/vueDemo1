@@ -30,7 +30,6 @@ export default {
   box-shadow:0 0 3px rgba(0,0,0,0.25);
 
   .item {
-    //border:1px solid red;
     width:33.33333333%;
     display: flex;
     flex-direction: column;
